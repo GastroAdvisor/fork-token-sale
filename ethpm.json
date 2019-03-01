@@ -1,0 +1,18 @@
+{
+  "package_name": "fork-token-sale",
+  "version": "1.0.0",
+  "description": "Smart contract for FORK token sale",
+  "authors": [
+    "Vittorio Minacori (https://github.com/vittominacori)"
+  ],
+  "keywords": [
+    "solidity",
+    "ethereum",
+    "smart",
+    "contracts",
+    "token",
+    "truffle",
+    "openzeppelin"
+  ],
+  "license": "MIT"
+}
