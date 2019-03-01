@@ -3,7 +3,10 @@ module.exports = {
   testCommand: 'node --max-old-space-size=4096 ../node_modules/.bin/truffle test --network coverage',
   compileCommand: 'node --max-old-space-size=4096 ../node_modules/.bin/truffle compile --network coverage',
   copyPackages: [
-    'ico-maker'
+    'erc-payable-token',
+    'eth-token-recover',
+    'openzeppelin-solidity',
+    'ico-maker',
   ],
   skipFiles: [
     'mocks'
