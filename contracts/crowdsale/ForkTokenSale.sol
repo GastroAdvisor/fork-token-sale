@@ -11,6 +11,8 @@ contract ForkTokenSale is BaseCrowdsale {
 
   uint256 private _currentRate;
 
+  uint256 private _soldTokens;
+
   constructor(
     uint256 openingTime,
     uint256 closingTime,
@@ -53,11 +55,33 @@ contract ForkTokenSale is BaseCrowdsale {
   }
 
   /**
+   * @return the number of sold tokens.
+   */
+  function soldTokens() public view returns(uint256) {
+    return _soldTokens;
+  }
+
+  /**
    * @dev Override to extend the way in which ether is converted to tokens.
    * @param weiAmount Value in wei to be converted into tokens
    * @return Number of tokens that can be purchased with the specified _weiAmount
    */
   function _getTokenAmount(uint256 weiAmount) internal view returns (uint256) {
     return weiAmount.mul(rate());
+  }
+
+  /**
+   * @dev Update the contributions contract states
+   * @param beneficiary Address receiving the tokens
+   * @param weiAmount Value in wei involved in the purchase
+   */
+  function _updatePurchasingState(
+    address beneficiary,
+    uint256 weiAmount
+  )
+    internal
+  {
+    _soldTokens = _soldTokens.add(_getTokenAmount(weiAmount));
+    super._updatePurchasingState(beneficiary, weiAmount);
   }
 }

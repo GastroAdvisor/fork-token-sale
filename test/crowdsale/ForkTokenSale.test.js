@@ -217,5 +217,41 @@ contract('ForkTokenSale', function ([owner, investor, wallet, purchaser, thirdPa
         });
       });
     });
+
+    describe('high-level purchase', function () {
+      const value = new BigNumber(web3.toWei(1, 'ether'));
+
+      beforeEach(async function () {
+        await time.increaseTo(this.openingTime);
+      });
+
+      it('should increase sold tokens', async function () {
+        const preSoldTokens = await this.crowdsale.soldTokens();
+        preSoldTokens.should.be.bignumber.equal(0);
+
+        await this.crowdsale.sendTransaction({ value: value, from: investor });
+
+        const postSoldTokens = await this.crowdsale.soldTokens();
+        postSoldTokens.should.be.bignumber.equal(value.mul(rate));
+      });
+    });
+
+    describe('low-level purchase', function () {
+      const value = new BigNumber(web3.toWei(1, 'ether'));
+
+      beforeEach(async function () {
+        await time.increaseTo(this.openingTime);
+      });
+
+      it('should increase sold tokens', async function () {
+        const preSoldTokens = await this.crowdsale.soldTokens();
+        preSoldTokens.should.be.bignumber.equal(0);
+
+        await this.crowdsale.buyTokens(investor, { value, from: purchaser });
+
+        const postSoldTokens = await this.crowdsale.soldTokens();
+        postSoldTokens.should.be.bignumber.equal(value.mul(rate));
+      });
+    });
   });
 });
