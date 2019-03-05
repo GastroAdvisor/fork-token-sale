@@ -1,6 +1,6 @@
 pragma solidity ^0.4.25;
 
-// File: /Users/vittominacori/Projects/gastroadvisor/fork-token-sale/node_modules/openzeppelin-solidity/contracts/token/ERC20/IERC20.sol
+// File: openzeppelin-solidity/contracts/token/ERC20/IERC20.sol
 
 /**
  * @title ERC20 interface
@@ -35,7 +35,7 @@ interface IERC20 {
   );
 }
 
-// File: /Users/vittominacori/Projects/gastroadvisor/fork-token-sale/node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol
+// File: openzeppelin-solidity/contracts/math/SafeMath.sol
 
 /**
  * @title SafeMath
@@ -310,7 +310,7 @@ contract ERC20 is IERC20 {
   }
 }
 
-// File: /Users/vittominacori/Projects/gastroadvisor/fork-token-sale/node_modules/openzeppelin-solidity/contracts/token/ERC20/SafeERC20.sol
+// File: openzeppelin-solidity/contracts/token/ERC20/SafeERC20.sol
 
 /**
  * @title SafeERC20
@@ -380,7 +380,7 @@ library SafeERC20 {
   }
 }
 
-// File: /Users/vittominacori/Projects/gastroadvisor/fork-token-sale/node_modules/openzeppelin-solidity/contracts/utils/ReentrancyGuard.sol
+// File: openzeppelin-solidity/contracts/utils/ReentrancyGuard.sol
 
 /**
  * @title Helps contracts guard against reentrancy attacks.
@@ -415,7 +415,7 @@ contract ReentrancyGuard {
 
 }
 
-// File: /Users/vittominacori/Projects/gastroadvisor/fork-token-sale/node_modules/openzeppelin-solidity/contracts/crowdsale/Crowdsale.sol
+// File: openzeppelin-solidity/contracts/crowdsale/Crowdsale.sol
 
 /**
  * @title Crowdsale
@@ -788,107 +788,6 @@ contract CappedCrowdsale is Crowdsale {
 
 }
 
-// File: openzeppelin-solidity/contracts/math/SafeMath.sol
-
-/**
- * @title SafeMath
- * @dev Math operations with safety checks that revert on error
- */
-library SafeMath {
-
-  /**
-  * @dev Multiplies two numbers, reverts on overflow.
-  */
-  function mul(uint256 a, uint256 b) internal pure returns (uint256) {
-    // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
-    // benefit is lost if 'b' is also tested.
-    // See: https://github.com/OpenZeppelin/openzeppelin-solidity/pull/522
-    if (a == 0) {
-      return 0;
-    }
-
-    uint256 c = a * b;
-    require(c / a == b);
-
-    return c;
-  }
-
-  /**
-  * @dev Integer division of two numbers truncating the quotient, reverts on division by zero.
-  */
-  function div(uint256 a, uint256 b) internal pure returns (uint256) {
-    require(b > 0); // Solidity only automatically asserts when dividing by 0
-    uint256 c = a / b;
-    // assert(a == b * c + a % b); // There is no case in which this doesn't hold
-
-    return c;
-  }
-
-  /**
-  * @dev Subtracts two numbers, reverts on overflow (i.e. if subtrahend is greater than minuend).
-  */
-  function sub(uint256 a, uint256 b) internal pure returns (uint256) {
-    require(b <= a);
-    uint256 c = a - b;
-
-    return c;
-  }
-
-  /**
-  * @dev Adds two numbers, reverts on overflow.
-  */
-  function add(uint256 a, uint256 b) internal pure returns (uint256) {
-    uint256 c = a + b;
-    require(c >= a);
-
-    return c;
-  }
-
-  /**
-  * @dev Divides two numbers and returns the remainder (unsigned integer modulo),
-  * reverts when dividing by zero.
-  */
-  function mod(uint256 a, uint256 b) internal pure returns (uint256) {
-    require(b != 0);
-    return a % b;
-  }
-}
-
-// File: openzeppelin-solidity/contracts/token/ERC20/IERC20.sol
-
-/**
- * @title ERC20 interface
- * @dev see https://github.com/ethereum/EIPs/issues/20
- */
-interface IERC20 {
-  function totalSupply() external view returns (uint256);
-
-  function balanceOf(address who) external view returns (uint256);
-
-  function allowance(address owner, address spender)
-    external view returns (uint256);
-
-  function transfer(address to, uint256 value) external returns (bool);
-
-  function approve(address spender, uint256 value)
-    external returns (bool);
-
-  function transferFrom(address from, address to, uint256 value)
-    external returns (bool);
-
-  event Transfer(
-    address indexed from,
-    address indexed to,
-    uint256 value
-  );
-
-  event Approval(
-    address indexed owner,
-    address indexed spender,
-    uint256 value
-  );
-}
-
 // File: openzeppelin-solidity/contracts/ownership/Ownable.sol
 
 /**
@@ -1035,7 +934,7 @@ library Roles {
   }
 }
 
-// File: /Users/vittominacori/Projects/gastroadvisor/fork-token-sale/node_modules/ico-maker/contracts/access/roles/OperatorRole.sol
+// File: ico-maker/contracts/access/roles/OperatorRole.sol
 
 contract OperatorRole {
   using Roles for Roles.Role;
@@ -1077,7 +976,7 @@ contract OperatorRole {
   }
 }
 
-// File: /Users/vittominacori/Projects/gastroadvisor/fork-token-sale/node_modules/ico-maker/contracts/crowdsale/utils/Contributions.sol
+// File: ico-maker/contracts/crowdsale/utils/Contributions.sol
 
 /**
  * @title Contributions
@@ -1330,6 +1229,8 @@ contract ForkTokenSale is BaseCrowdsale {
 
   uint256 private _currentRate;
 
+  uint256 private _soldTokens;
+
   constructor(
     uint256 openingTime,
     uint256 closingTime,
@@ -1372,11 +1273,33 @@ contract ForkTokenSale is BaseCrowdsale {
   }
 
   /**
+   * @return the number of sold tokens.
+   */
+  function soldTokens() public view returns(uint256) {
+    return _soldTokens;
+  }
+
+  /**
    * @dev Override to extend the way in which ether is converted to tokens.
    * @param weiAmount Value in wei to be converted into tokens
    * @return Number of tokens that can be purchased with the specified _weiAmount
    */
   function _getTokenAmount(uint256 weiAmount) internal view returns (uint256) {
     return weiAmount.mul(rate());
+  }
+
+  /**
+   * @dev Update the contributions contract states
+   * @param beneficiary Address receiving the tokens
+   * @param weiAmount Value in wei involved in the purchase
+   */
+  function _updatePurchasingState(
+    address beneficiary,
+    uint256 weiAmount
+  )
+    internal
+  {
+    _soldTokens = _soldTokens.add(_getTokenAmount(weiAmount));
+    super._updatePurchasingState(beneficiary, weiAmount);
   }
 }

@@ -5,7 +5,7 @@
 
 |  File Name  |  SHA-1 Hash  |
 |-------------|--------------|
-| dist/ForkTokenSale.dist.sol | bcb2a7bc20c3dae4669a23a787d051183c9c31bb |
+| dist/ForkTokenSale.dist.sol | d0ee6b7ba28bdb2979ff875a765cc3efd16054c3 |
 
 
 ### Contracts Description Table
@@ -84,21 +84,6 @@
 | └ | capReached | Public ❗️ |   |NO❗️ |
 | └ | _preValidatePurchase | Internal 🔒 |   | |
 ||||||
-| **SafeMath** | Library |  |||
-| └ | mul | Internal 🔒 |   | |
-| └ | div | Internal 🔒 |   | |
-| └ | sub | Internal 🔒 |   | |
-| └ | add | Internal 🔒 |   | |
-| └ | mod | Internal 🔒 |   | |
-||||||
-| **IERC20** | Interface |  |||
-| └ | totalSupply | External ❗️ |   |NO❗️ |
-| └ | balanceOf | External ❗️ |   |NO❗️ |
-| └ | allowance | External ❗️ |   |NO❗️ |
-| └ | transfer | External ❗️ | 🛑  |NO❗️ |
-| └ | approve | External ❗️ | 🛑  |NO❗️ |
-| └ | transferFrom | External ❗️ | 🛑  |NO❗️ |
-||||||
 | **Ownable** | Implementation |  |||
 | └ | \<Constructor\> | Internal 🔒 | 🛑  | |
 | └ | owner | Public ❗️ |   |NO❗️ |
@@ -148,7 +133,9 @@
 | └ | \<Constructor\> | Public ❗️ | 🛑  | BaseCrowdsale |
 | └ | setRate | Public ❗️ | 🛑  | onlyOwner |
 | └ | rate | Public ❗️ |   |NO❗️ |
+| └ | soldTokens | Public ❗️ |   |NO❗️ |
 | └ | _getTokenAmount | Internal 🔒 |   | |
+| └ | _updatePurchasingState | Internal 🔒 | 🛑  | |
 
 
 ### Legend
